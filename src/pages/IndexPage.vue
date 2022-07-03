@@ -1,26 +1,25 @@
 <template>
   <button @click="increment">
-    Count is {{count}}, Double is {{double}}
+    Count is {{state.count}}, Double is {{double}}
   </button>
 </template>
 
 <script>
-import { defineComponent } from 'vue'
+import { computed, defineComponent, reactive } from 'vue'
 
 export default defineComponent({
-  data () {
-    return {
+  setup () {
+    const state = reactive({
       count: 0
-    }
-  },
-  computed: {
-    double () {
-      return this.count * 2
-    }
-  },
-  methods: {
-    increment () {
-      this.count++
+    })
+
+    const double = computed(() => state.count * 2)
+    const increment = () => state.count++
+
+    return {
+      state,
+      double,
+      increment
     }
   },
   name: 'IndexPage'
